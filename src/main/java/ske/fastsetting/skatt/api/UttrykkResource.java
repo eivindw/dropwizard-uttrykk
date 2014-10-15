@@ -36,6 +36,6 @@ public class UttrykkResource {
     }
 
     private BelopUttrykk<?> lagUttrykk() {
-        return kr(100).multiplisertMed(prosent(8.2));
+        return kr(100).navn("lønn").multiplisertMed(prosent(8.2).navn("sats trygd")).navn("skatt");
     }
 }
