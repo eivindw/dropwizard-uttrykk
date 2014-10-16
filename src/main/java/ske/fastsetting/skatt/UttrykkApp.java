@@ -13,7 +13,7 @@ public class UttrykkApp extends Application<Configuration> {
 
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
-            args = new String[]{"server"};
+            args = new String[]{"server", "src/main/config/server.yml"};
         }
         new UttrykkApp().run(args);
     }
