@@ -7,6 +7,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import ske.fastsetting.skatt.api.UttrykkResource;
 import ske.fastsetting.skatt.module.KalkulerbarVerdiSerializer;
+import ske.fastsetting.skatt.module.RegelSerializer;
 
 public class UttrykkApp extends Application<Configuration> {
 
@@ -22,6 +23,7 @@ public class UttrykkApp extends Application<Configuration> {
         bootstrap.getObjectMapper().registerModule(
             new SimpleModule("Uttrykk")
                 .addSerializer(new KalkulerbarVerdiSerializer())
+                .addSerializer(new RegelSerializer())
         );
     }
 
