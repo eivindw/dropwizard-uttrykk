@@ -1,8 +1,10 @@
 package ske.fastsetting.skatt;
 
+import com.bazaarvoice.dropwizard.webjars.WebJarBundle;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import ske.fastsetting.skatt.api.UttrykkResource;
@@ -25,10 +27,13 @@ public class UttrykkApp extends Application<Configuration> {
                 .addSerializer(new KalkulerbarVerdiSerializer())
                 .addSerializer(new RegelSerializer())
         );
+        bootstrap.addBundle(new WebJarBundle());
+        bootstrap.addBundle(new AssetsBundle("/web", "/web", "index.html", "web"));
     }
 
     @Override
     public void run(Configuration conf, Environment env) throws Exception {
+        env.jersey().setUrlPattern("/api");
         env.jersey().register(UttrykkResource.class);
     }
 }

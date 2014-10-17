@@ -12,10 +12,17 @@
    <properties>
       <dropwizard.version>0.7.1</dropwizard.version>
       <uttrykk.version>1.0-SNAPSHOT</uttrykk.version>
+      <dropwizard-webjars.version>0.2.1</dropwizard-webjars.version>
    </properties>
 
    <dependencyManagement>
       <dependencies>
+         <dependency>
+            <groupId>ske.fastsetting.skatt</groupId>
+            <artifactId>uttrykk</artifactId>
+            <version>${uttrykk.version}</version>
+            <scope>compile</scope>
+         </dependency>
          <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
@@ -23,9 +30,15 @@
             <scope>compile</scope>
          </dependency>
          <dependency>
-            <groupId>ske.fastsetting.skatt</groupId>
-            <artifactId>uttrykk</artifactId>
-            <version>${uttrykk.version}</version>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-assets</artifactId>
+            <version>${dropwizard.version}</version>
+            <scope>compile</scope>
+         </dependency>
+         <dependency>
+            <groupId>com.bazaarvoice.dropwizard</groupId>
+            <artifactId>dropwizard-webjars-bundle</artifactId>
+            <version>${dropwizard-webjars.version}</version>
             <scope>compile</scope>
          </dependency>
       </dependencies>
@@ -33,12 +46,20 @@
 
    <dependencies>
       <dependency>
+         <groupId>ske.fastsetting.skatt</groupId>
+         <artifactId>uttrykk</artifactId>
+      </dependency>
+      <dependency>
          <groupId>io.dropwizard</groupId>
          <artifactId>dropwizard-core</artifactId>
       </dependency>
       <dependency>
-         <groupId>ske.fastsetting.skatt</groupId>
-         <artifactId>uttrykk</artifactId>
+         <groupId>io.dropwizard</groupId>
+         <artifactId>dropwizard-assets</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>com.bazaarvoice.dropwizard</groupId>
+         <artifactId>dropwizard-webjars-bundle</artifactId>
       </dependency>
    </dependencies>
 
