@@ -28,12 +28,12 @@ public class UttrykkApp extends Application<Configuration> {
                 .addSerializer(new RegelSerializer())
         );
         bootstrap.addBundle(new WebJarBundle());
-        bootstrap.addBundle(new AssetsBundle("/web", "/web", "index.html", "web"));
+        bootstrap.addBundle(new AssetsBundle("/web/", "/", "index.html", "web"));
     }
 
     @Override
     public void run(Configuration conf, Environment env) throws Exception {
-        env.jersey().setUrlPattern("/api");
+        env.jersey().setUrlPattern("/api/*");
         env.jersey().register(UttrykkResource.class);
     }
 }
