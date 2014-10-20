@@ -25,29 +25,29 @@ public class UttrykkResource {
     @GET
     @Path("beregneOgBeskrive")
     public Object beregneOgBeskriveTest() {
-        return BESKRIVER.beskriv(beregneOgBeskrive(lagUttrykk()));
+        return BESKRIVER.beskriv(beregneOgBeskrive(lagUttrykk(), null));
     }
 
     @GET
     @Path("beregne")
     public Object beregneTest() {
-        return BESKRIVER.beskriv(beregne(lagUttrykk()));
+        return BESKRIVER.beskriv(beregne(lagUttrykk(), null));
     }
 
     @GET
     @Path("beskrive")
     public Object beskriveTest() {
-        return BESKRIVER.beskriv(beskrive(lagUttrykk()));
+        return BESKRIVER.beskriv(beskrive(lagUttrykk(), null));
     }
 
-    private BelopUttrykk<?> lagUttrykk() {
-        final ProsentUttrykk satsTrygd = prosent(8.2).navn("sats trygd").tags(TAG_SATS);
-        final ProsentUttrykk satsInntektsskatt = prosent(27).navn("sats inntektsskatt").tags(TAG_SATS);
+    private BelopUttrykk<Object> lagUttrykk() {
+        final ProsentUttrykk<Object> satsTrygd = prosent(8.2).navn("sats trygd").tags(TAG_SATS);
+        final ProsentUttrykk<Object> satsInntektsskatt = prosent(27).navn("sats inntektsskatt").tags(TAG_SATS);
 
-        final KroneUttrykk lonn = kr(100).navn("lønn").regler(Regel.skatteloven("5-1"));
+        final KroneUttrykk<Object> lonn = kr(100).navn("lønn").regler(Regel.skatteloven("5-1"));
 
-        final BelopUttrykk trygdeavgift = lonn.multiplisertMed(satsTrygd).navn("trygdeavgift");
-        final BelopUttrykk inntektsskatt = lonn.multiplisertMed(satsInntektsskatt).navn("inntektsskatt");
+        final BelopUttrykk<Object> trygdeavgift = lonn.multiplisertMed(satsTrygd).navn("trygdeavgift");
+        final BelopUttrykk<Object> inntektsskatt = lonn.multiplisertMed(satsInntektsskatt).navn("inntektsskatt");
 
         return trygdeavgift.pluss(inntektsskatt).navn("sum skatt");
     }

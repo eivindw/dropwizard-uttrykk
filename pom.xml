@@ -11,7 +11,7 @@
 
    <properties>
       <dropwizard.version>0.7.1</dropwizard.version>
-      <uttrykk.version>1.0-SNAPSHOT</uttrykk.version>
+      <uttrykk.version>1.0-typet-SNAPSHOT</uttrykk.version>
       <dropwizard-webjars.version>0.2.1</dropwizard-webjars.version>
       <jquery.version>2.1.1</jquery.version>
    </properties>
