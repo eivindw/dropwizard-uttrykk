@@ -5,9 +5,7 @@ import ske.fastsetting.skatt.uttrykk.belop.BelopUttrykk;
 
 import java.util.Map;
 
-public class PostUttrykk
-    extends AbstractUttrykk<Belop, PostUttrykk, Map<String, Integer>>
-    implements BelopUttrykk<Map<String, Integer>>
+public class PostUttrykk extends AbstractUttrykk<Belop, PostUttrykk> implements BelopUttrykk
 {
 
     private final String postId;
@@ -17,12 +15,12 @@ public class PostUttrykk
     }
 
     @Override
-    public Belop eval(UttrykkContext<Map<String, Integer>> ctx) {
-        return new Belop(ctx.input().getOrDefault(postId, 0));
+    public Belop eval(UttrykkContext ctx) {
+        return new Belop((Integer) ctx.input(Map.class).getOrDefault(postId, 0));
     }
 
     @Override
-    public String beskriv(UttrykkContext<Map<String, Integer>> ctx) {
+    public String beskriv(UttrykkContext ctx) {
         return "Post: " + postId;
     }
 }

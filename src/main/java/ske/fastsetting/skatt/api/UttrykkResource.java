@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static ske.fastsetting.skatt.uttrykk.UttrykkContextImpl.*;
+import static ske.fastsetting.skatt.uttrykk.belop.KroneUttrykk.kr;
+import static ske.fastsetting.skatt.uttrykk.tall.ProsentUttrykk.prosent;
 
 @Path("uttrykk")
 @Produces("application/json")
@@ -40,34 +42,26 @@ public class UttrykkResource {
     @GET
     @Path("beskrive")
     public Object beskriveTest() {
-        return BESKRIVER.beskriv(beskrive(lagUttrykk(), null));
+        return BESKRIVER.beskriv(beskrive(lagUttrykk()));
     }
 
     protected static Map<String, Integer> lagGrunnlag() {
-        return new HashMap<String, Integer>() {{
-            put("lonn", 200);
-        }};
+        Map<String, Integer> map = new HashMap<>();
+        map.put("lonn", 200);
+        return map;
     }
 
-    protected static BelopUttrykk<Map<String, Integer>> lagUttrykk() {
-        final ProsentUttrykk<Map<String, Integer>> satsTrygd = prosent(8.2).navn("sats trygd").tags(TAG_SATS);
-        final ProsentUttrykk<Map<String, Integer>> satsInntektsskatt = prosent(27).navn("sats inntektsskatt").tags(TAG_SATS);
+    protected static BelopUttrykk lagUttrykk() {
+        final ProsentUttrykk satsTrygd = prosent(8.2).navn("sats trygd").tags(TAG_SATS);
+        final ProsentUttrykk satsInntektsskatt = prosent(27).navn("sats inntektsskatt").tags(TAG_SATS);
 
-        final KroneUttrykk<Map<String, Integer>> fradrag = kr(100).navn("fradrag").regler(Regel.skatteloven("5-1"));
+        final KroneUttrykk fradrag = kr(100).navn("fradrag").regler(Regel.skatteloven("5-1"));
         final PostUttrykk lonn = new PostUttrykk("lonn");
-        final BelopDiffUttrykk<Map<String, Integer>> lonnEtterFradrag = lonn.minus(fradrag);
+        final BelopDiffUttrykk lonnEtterFradrag = lonn.minus(fradrag);
 
-        final BelopUttrykk<Map<String, Integer>> trygdeavgift = lonnEtterFradrag.multiplisertMed(satsTrygd).navn("trygdeavgift");
-        final BelopUttrykk<Map<String, Integer>> inntektsskatt = lonnEtterFradrag.multiplisertMed(satsInntektsskatt).navn("inntektsskatt");
+        final BelopUttrykk trygdeavgift = lonnEtterFradrag.multiplisertMed(satsTrygd).navn("trygdeavgift");
+        final BelopUttrykk inntektsskatt = lonnEtterFradrag.multiplisertMed(satsInntektsskatt).navn("inntektsskatt");
 
         return trygdeavgift.pluss(inntektsskatt).navn("sum skatt");
-    }
-
-    private static ProsentUttrykk<Map<String, Integer>> prosent(double prosent) {
-        return ProsentUttrykk.<Map<String, Integer>>prosent(prosent);
-    }
-
-    private static KroneUttrykk<Map<String, Integer>> kr(int belop) {
-        return KroneUttrykk.<Map<String, Integer>>kr(belop);
     }
 }
