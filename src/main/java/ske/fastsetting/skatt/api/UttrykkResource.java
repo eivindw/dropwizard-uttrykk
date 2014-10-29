@@ -3,6 +3,7 @@ package ske.fastsetting.skatt.api;
 import ske.fastsetting.skatt.domene.Regel;
 import ske.fastsetting.skatt.uttrykk.PostUttrykk;
 import ske.fastsetting.skatt.uttrykk.belop.BelopDiffUttrykk;
+import ske.fastsetting.skatt.uttrykk.belop.BelopDivisjonsUttrykk;
 import ske.fastsetting.skatt.uttrykk.belop.BelopUttrykk;
 import ske.fastsetting.skatt.uttrykk.belop.KroneUttrykk;
 import ske.fastsetting.skatt.uttrykk.tall.ProsentUttrykk;
@@ -11,13 +12,14 @@ import ske.fastsetting.skatt.uttrykk.uttrykkbeskriver.MapUttrykkBeskriver;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import static ske.fastsetting.skatt.uttrykk.UttrykkContextImpl.*;
+import static ske.fastsetting.skatt.uttrykk.belop.BelopHvisUttrykk.hvis;
 import static ske.fastsetting.skatt.uttrykk.belop.KroneUttrykk.kr;
+import static ske.fastsetting.skatt.uttrykk.tall.KonstantUttrykk.tall;
 import static ske.fastsetting.skatt.uttrykk.tall.ProsentUttrykk.prosent;
 
 @Path("uttrykk")
@@ -63,6 +65,10 @@ public class UttrykkResource {
         final BelopUttrykk trygdeavgift = lonnEtterFradrag.multiplisertMed(satsTrygd).navn("trygdeavgift");
         final BelopUttrykk inntektsskatt = lonnEtterFradrag.multiplisertMed(satsInntektsskatt).navn("inntektsskatt");
 
-        return trygdeavgift.pluss(inntektsskatt).navn("sum skatt");
+        final BelopDivisjonsUttrykk skatt = trygdeavgift.pluss(inntektsskatt).dividertMed(tall(2)).navn("sum skatt");
+
+        return hvis(skatt.erMellom(kr(50), kr(100)))
+            .brukDa(kr(50))
+            .ellersBruk(skatt);
     }
 }
