@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import static ske.fastsetting.skatt.uttrykk.UttrykkContextImpl.*;
 import static ske.fastsetting.skatt.uttrykk.belop.KroneUttrykk.kr;
@@ -47,7 +48,7 @@ public class UttrykkResource {
 
     protected static Map<String, Integer> lagGrunnlag() {
         Map<String, Integer> map = new HashMap<>();
-        map.put("lonn", 200);
+        map.put("lonn", new Random().nextInt(2_000));
         return map;
     }
 
