@@ -67,8 +67,9 @@ public class UttrykkResource {
 
         final BelopDivisjonsUttrykk skatt = trygdeavgift.pluss(inntektsskatt).dividertMed(tall(2)).navn("sum skatt");
 
-        return hvis(skatt.erMellom(kr(50), kr(100)))
+        return hvis(skatt.erMellom(kr(50), kr(100)).navn("begrensning"))
             .brukDa(kr(50))
-            .ellersBruk(skatt);
+            .ellersBruk(skatt)
+            .navn("begrenset skatt");
     }
 }
