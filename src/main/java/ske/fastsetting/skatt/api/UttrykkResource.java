@@ -65,11 +65,6 @@ public class UttrykkResource {
         final BelopUttrykk trygdeavgift = lonnEtterFradrag.multiplisertMed(satsTrygd).navn("trygdeavgift");
         final BelopUttrykk inntektsskatt = lonnEtterFradrag.multiplisertMed(satsInntektsskatt).navn("inntektsskatt");
 
-        final BelopDivisjonsUttrykk skatt = trygdeavgift.pluss(inntektsskatt).dividertMed(tall(2)).navn("sum skatt");
-
-        return hvis(skatt.erMellom(kr(50), kr(100)).navn("begrensning"))
-            .brukDa(kr(50))
-            .ellersBruk(skatt)
-            .navn("begrenset skatt");
+        return trygdeavgift.pluss(inntektsskatt).navn("sum skatt");
     }
 }
